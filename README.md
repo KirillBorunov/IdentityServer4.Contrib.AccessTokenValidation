@@ -8,6 +8,7 @@ This is based on the archived IdentityServer3 Access Token Validation package ht
 #### What is changed:
 - Updated the dependencies versions
 - Added `ValidAudience` property to the options, when present it will replace the old way `/resources` audience checks
+- Changed token type validation to `at+jwt`
 - Default ValidationMode set to Local
 
 #### TODO:
