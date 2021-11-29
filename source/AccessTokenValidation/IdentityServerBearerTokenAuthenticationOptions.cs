@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
@@ -38,7 +38,7 @@ namespace IdentityServer3.AccessTokenValidation
             NameClaimType = "name";
             RoleClaimType = "role";
 
-            ValidationMode = ValidationMode.Both;
+            ValidationMode = ValidationMode.Local;
             RequiredScopes = Enumerable.Empty<string>();
             ValidationResultCacheDuration = TimeSpan.FromMinutes(5);
             PreserveAccessToken = false;
@@ -53,6 +53,8 @@ namespace IdentityServer3.AccessTokenValidation
         /// The authority.
         /// </value>
         public string Authority { get; set; }
+
+        public string ValidAudience { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the issuer (if you don't want to use the discovery document).

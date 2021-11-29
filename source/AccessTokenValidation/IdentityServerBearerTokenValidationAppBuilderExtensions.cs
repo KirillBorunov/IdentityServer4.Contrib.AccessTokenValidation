@@ -15,12 +15,13 @@
  */
 
 using IdentityServer3.AccessTokenValidation;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.Owin.Extensions;
 using Microsoft.Owin.Logging;
 using Microsoft.Owin.Security.Jwt;
 using Microsoft.Owin.Security.OAuth;
 using System;
-using System.IdentityModel.Tokens;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
@@ -106,35 +107,36 @@ namespace Owin
 
         private static Lazy<OAuthBearerAuthenticationOptions> ConfigureEndpointValidation(IdentityServerBearerTokenAuthenticationOptions options, ILoggerFactory loggerFactory)
         {
-            return new Lazy<OAuthBearerAuthenticationOptions>(() => 
-            {
-                if (options.EnableValidationResultCache)
-                {
-                    if (options.ValidationResultCache == null)
-                    {
-                        options.ValidationResultCache = new InMemoryValidationResultCache(options);
-                    }
-                }
+            //return new Lazy<OAuthBearerAuthenticationOptions>(() => 
+            //{
+            //    if (options.EnableValidationResultCache)
+            //    {
+            //        if (options.ValidationResultCache == null)
+            //        {
+            //            options.ValidationResultCache = new InMemoryValidationResultCache(options);
+            //        }
+            //    }
 
-                var bearerOptions = new OAuthBearerAuthenticationOptions
-                {
-                    AuthenticationMode = options.AuthenticationMode,
-                    AuthenticationType = options.AuthenticationType,
-                    Provider = new ContextTokenProvider(options.TokenProvider),
-                };
+            //    var bearerOptions = new OAuthBearerAuthenticationOptions
+            //    {
+            //        AuthenticationMode = options.AuthenticationMode,
+            //        AuthenticationType = options.AuthenticationType,
+            //        Provider = new ContextTokenProvider(options.TokenProvider),
+            //    };
 
-                if (!string.IsNullOrEmpty(options.ClientId) || options.IntrospectionHttpHandler != null)
-                {
-                    bearerOptions.AccessTokenProvider = new IntrospectionEndpointTokenProvider(options, loggerFactory);
-                }
-                else
-                {
-                    bearerOptions.AccessTokenProvider = new ValidationEndpointTokenProvider(options, loggerFactory);
-                }
+            //    if (!string.IsNullOrEmpty(options.ClientId) || options.IntrospectionHttpHandler != null)
+            //    {
+            //        bearerOptions.AccessTokenProvider = new IntrospectionEndpointTokenProvider(options, loggerFactory);
+            //    }
+            //    else
+            //    {
+            //        bearerOptions.AccessTokenProvider = new ValidationEndpointTokenProvider(options, loggerFactory);
+            //    }
 
-                return bearerOptions;
+            //    return bearerOptions;
 
-            }, true);
+            //}, true);
+            throw new NotImplementedException();
         }
 
         internal static Lazy<OAuthBearerAuthenticationOptions> ConfigureLocalValidation(IdentityServerBearerTokenAuthenticationOptions options, ILoggerFactory loggerFactory)
@@ -153,11 +155,14 @@ namespace Owin
                     var valParams = new TokenValidationParameters
                     {
                         ValidIssuer = options.IssuerName,
-                        ValidAudience = audience,
-                        IssuerSigningToken = new X509SecurityToken(options.SigningCertificate),
+                        ValidAudience = string.IsNullOrEmpty(options.ValidAudience) ? audience : options.ValidAudience,
+                        //IssuerSigningToken = new System.IdentityModel.Tokens.X509SecurityToken(options.SigningCertificate),
+                        IssuerSigningKey = new Microsoft.IdentityModel.Tokens.X509SecurityKey(options.SigningCertificate),
 
                         NameClaimType = options.NameClaimType,
                         RoleClaimType = options.RoleClaimType,
+
+                        ValidTypes = new string[] { "at+jwt" }
                     };
 
                     tokenFormat = new JwtFormat(valParams);
@@ -180,9 +185,11 @@ namespace Owin
 
                     var valParams = new TokenValidationParameters
                     {
-                        ValidAudience = issuerProvider.Audience,
+                        ValidAudience = string.IsNullOrEmpty(options.ValidAudience) ? issuerProvider.Audience : options.ValidAudience,
                         NameClaimType = options.NameClaimType,
-                        RoleClaimType = options.RoleClaimType
+                        RoleClaimType = options.RoleClaimType,
+
+                        ValidTypes = new string[] { "at+jwt" }
                     };
 
                     if (options.IssuerSigningKeyResolver != null)
@@ -211,29 +218,29 @@ namespace Owin
             }, LazyThreadSafetyMode.PublicationOnly);
         }
 
-        private static SecurityKey ResolveRsaKeys(
+        private static IEnumerable<SecurityKey> ResolveRsaKeys(
             string token, 
-            SecurityToken securityToken, 
-            SecurityKeyIdentifier keyIdentifier, 
+            SecurityToken securityToken,
+            string keyIdentifier, 
             TokenValidationParameters validationParameters)
         {
-            string id = null;
-            foreach (var keyId in keyIdentifier)
-            {
-                var nk = keyId as NamedKeySecurityKeyIdentifierClause;
-                if (nk != null)
-                {
-                    id = nk.Id;
-                    break;
-                }
-            }
+            string id = keyIdentifier;
+            //foreach (var keyId in keyIdentifier)
+            //{
+            //    var nk = keyId as NamedKeySecurityKeyIdentifierClause;
+            //    if (nk != null)
+            //    {
+            //        id = nk.Id;
+            //        break;
+            //    }
+            //}
 
             if (id == null) return null;
 
-            var issuerToken = validationParameters.IssuerSigningTokens.FirstOrDefault(it => it.Id == id);
+            var issuerToken = validationParameters.IssuerSigningKeys.FirstOrDefault(it => it.KeyId == id);
             if (issuerToken == null) return null;
 
-            return issuerToken.SecurityKeys.FirstOrDefault();
+            return new SecurityKey[] { issuerToken };
         }
     }
 }
