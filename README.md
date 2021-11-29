@@ -3,17 +3,18 @@ IdentityServer4 - AccessTokenValidation
 
 OWIN Middleware to validate access tokens from IdentityServer v4.
 
-This is based on the IdentityServer3 Access Token Validation package https://github.com/IdentityServer/IdentityServer3.AccessTokenValidation
+This is based on the archived IdentityServer3 Access Token Validation package https://github.com/IdentityServer/IdentityServer3.AccessTokenValidation
 
-What is changed:
+#### What is changed:
 - Updated the dependencies versions
-- Added `ValidAudience` property to the options, when present it will replace the `/resources` audience checks
+- Added `ValidAudience` property to the options, when present it will replace the old way `/resources` audience checks
 - Default ValidationMode set to Local
 
-TODO:
+#### TODO:
 - Remote validation (currently only ValidationMode.Local is supported)
 - Automatic audience setting based on the request URL
 
+## Examples
 
 ```csharp
 app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions
