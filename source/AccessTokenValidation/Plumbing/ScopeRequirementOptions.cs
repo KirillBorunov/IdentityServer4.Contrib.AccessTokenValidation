@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace IdentityServer3.AccessTokenValidation
+namespace IdentityServer4.AccessTokenValidation
 {
     /// <summary>
     /// Options for validating scope claims

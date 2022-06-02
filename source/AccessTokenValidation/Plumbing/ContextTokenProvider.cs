@@ -17,7 +17,7 @@
 using Microsoft.Owin.Security.OAuth;
 using System.Threading.Tasks;
 
-namespace IdentityServer3.AccessTokenValidation
+namespace IdentityServer4.AccessTokenValidation
 {
     /// <summary>
     /// Token provider that returns the token already found by the identityserver token middleware

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+	<id>IdentityServer4.Contrib.AccessTokenValidation</id>
+    <version>1.0.0-alpha1</version>
+    <title>IdentityServer4 - Access Token Validation</title>
+    <authors>Kirill Borunov</authors>
+    <owners>Brock Allen,Dominick Baier</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/IdentityServer/IdentityServer3.AccessTokenValidation/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/KirillBorunov/IdentityServer4.Contrib.AccessTokenValidation</projectUrl>
+    <description>OWIN Middleware to validate access tokens from IdentityServer v4. (fork of IdentityServer3.AccessTokenValidation)</description>
+    <copyright>Copyright 2015</copyright>
+    <tags>IdentityServer OpenID Connect OpenIDConnect OAuth2 OWIN ASP.NET Katana WebApi SSO Federation Claims Identity JWT token OWIN</tags>
+  </metadata>
+</package>

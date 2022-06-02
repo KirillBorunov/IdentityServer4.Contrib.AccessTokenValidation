@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace IdentityServer3.AccessTokenValidation
+namespace IdentityServer4.AccessTokenValidation
 {
     /// <summary>
     /// Interface for caching then token validation result

@@ -23,7 +23,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 
-namespace IdentityServer3.AccessTokenValidation
+namespace IdentityServer4.AccessTokenValidation
 {
     /// <summary>
     /// Configures identity server token validation

@@ -156,3 +156,5 @@ distribution/
 source/IdentityServer3.AccessTokenValidation.sln.GhostDoc.xml
 
 source/.vs/
+nuget.publish_local.ps1
+*.nupkg

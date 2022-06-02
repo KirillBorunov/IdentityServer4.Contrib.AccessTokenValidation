@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-namespace IdentityServer3.AccessTokenValidation
+namespace IdentityServer4.AccessTokenValidation
 {
     /// <summary>
     /// Enum for specifying where to validate the access token

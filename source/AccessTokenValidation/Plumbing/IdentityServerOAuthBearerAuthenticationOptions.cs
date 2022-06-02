@@ -17,7 +17,7 @@
 using Microsoft.Owin.Security.OAuth;
 using System;
 
-namespace IdentityServer3.AccessTokenValidation
+namespace IdentityServer4.AccessTokenValidation
 {
     /// <summary>
     /// Options that wraps OAuth2BearerAuthenticationOptions for local and remote token validation

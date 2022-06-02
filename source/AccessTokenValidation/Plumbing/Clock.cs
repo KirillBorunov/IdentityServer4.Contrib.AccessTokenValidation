@@ -16,7 +16,7 @@
 
 using System;
 
-namespace IdentityServer3.AccessTokenValidation
+namespace IdentityServer4.AccessTokenValidation
 {
     /// <summary>
     /// Default clock implementation based on DateTimeOffset

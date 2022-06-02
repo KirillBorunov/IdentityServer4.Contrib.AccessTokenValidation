@@ -27,7 +27,7 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace IdentityServer3.AccessTokenValidation
+namespace IdentityServer4.AccessTokenValidation
 {
     internal class ValidationEndpointTokenProvider : AuthenticationTokenProvider
     {
