@@ -5,6 +5,8 @@ OWIN Middleware to validate access tokens from IdentityServer v4.
 
 This is based on the archived IdentityServer3 Access Token Validation package https://github.com/IdentityServer/IdentityServer3.AccessTokenValidation
 
+Alpha NuGet package available here: https://www.nuget.org/packages/IdentityServer4.Contrib.AccessTokenValidation/
+
 #### What is changed:
 - Updated the dependencies versions
 - Added `ValidAudience` property to the options, when present it will replace the old way `/resources` audience checks
